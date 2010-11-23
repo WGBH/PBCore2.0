@@ -8,35 +8,38 @@
    </xsd:annotation>
    <!-- optional schema version attribute -->
    <xsd:attribute name="schemaVersion" type="xsd:string"/>
-   <xsd:element name="PBCoreCollection">
-      <xsd:complexType>
-         <xsd:sequence>
-            <!-- everything falls under a descriptionDocument otherwise known as an asset -->
-            <xsd:element maxOccurs="unbounded" minOccurs="1" name="PBCoreDescriptionDocument"
-               type="pbcoreDocumentDescriptionType">
-               <xsd:annotation>
-                  <xsd:documentation xml:lang="en">"The Master Container assembles together all
-                     collections of PBCore knowledge items. For PBCore these knowledge items are
-                     metadata descriptions of media. The MasterContainer is expressed as a document
-                     that hierarchically structures all the knowledge items and metadata terms and
-                     values related to a single data record associated with a media item. In our XML
-                     Schema Definition, the MasterContainer is referred to as the
-                     'PBCoreDescriptionDocument.'"</xsd:documentation>
-               </xsd:annotation>
-            </xsd:element>
-         </xsd:sequence>
-         <xsd:attribute name="collectionTitle" type="xsd:string"/>
-         <xsd:attribute name="collectionDescription" type="xsd:string"/>
-         <xsd:attribute name="collectionSource" type="xsd:string"/>
-         <xsd:attribute name="collectionLink" type="xsd:string"/>
-         <xsd:attribute name="collectionDate" type="xsd:string"/>
-      </xsd:complexType>
-   </xsd:element>
+
+   <xsd:element name="pbcoreDocumentDescription" type="pbcoreDocumentDescriptionType"/>
+
+   <xsd:element name="pbcoreCollection" type="pbcoreCollectionType"/>
+
+   <xsd:complexType name="pbcoreCollectionType">
+      <xsd:sequence>
+         <!-- everything falls under a descriptionDocument otherwise known as an asset -->
+         <xsd:element maxOccurs="unbounded" minOccurs="1" name="pbcoreDescriptionDocument"
+            type="pbcoreDocumentDescriptionType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The Master Container assembles together all
+                  collections of PBCore knowledge items. For PBCore these knowledge items are
+                  metadata descriptions of media. The MasterContainer is expressed as a document
+                  that hierarchically structures all the knowledge items and metadata terms and
+                  values related to a single data record associated with a media item. In our XML
+                  Schema Definition, the MasterContainer is referred to as the
+                  'PBCoreDescriptionDocument.'"</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="collectionTitle" type="xsd:string"/>
+      <xsd:attribute name="collectionDescription" type="xsd:string"/>
+      <xsd:attribute name="collectionSource" type="xsd:string"/>
+      <xsd:attribute name="collectionLink" type="xsd:string"/>
+      <xsd:attribute name="collectionDate" type="xsd:string"/>
+   </xsd:complexType>
 
    <!-- pbcoreDocumentDescriptionType -->
    <xsd:complexType name="pbcoreDocumentDescriptionType">
       <xsd:sequence>
-         <xsd:element maxOccurs="1" minOccurs="0" name="pbcoreAssetType">
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="pbcoreAssetType">
             <xsd:complexType>
                <xsd:sequence>
                   <!-- the pbcore asset type - this element may occur only once -->
@@ -56,7 +59,7 @@
                         </xsd:documentation>
                      </xsd:annotation>
                   </xsd:element>
-                  <xsd:element maxOccurs="1" minOccurs="1" name="dateCreated" type="xsd:string">
+                  <xsd:element maxOccurs="unbounded" minOccurs="0" name="date" type="dateStringType">
                      <xsd:annotation>
                         <xsd:documentation xml:lang="en">"This is the orginal date the asset was
                            created." </xsd:documentation>
@@ -397,7 +400,7 @@
                      </xsd:annotation>
                   </xsd:element>
                   <xsd:element maxOccurs="unbounded" minOccurs="1" name="contributorRole"
-                     type="sourceVersionStringType">
+                     type="contributorStringType">
                      <xsd:annotation>
                         <xsd:documentation xml:lang="en">"Use the descriptor contributorRole to
                            identify the role played by the person or group identified in the
@@ -939,15 +942,6 @@
       <!-- For Readability - Instantiation complexType end -->
    </xsd:complexType>
 
-   <!-- instantiationPartType -->
-   <xsd:complexType name="instantiationPartType">
-      <xsd:complexContent>
-         <xsd:extension base="instantiationType">
-            <xsd:attributeGroup ref="relationGroup"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-
    <!-- pbcorePartType -->
    <xsd:complexType name="pbcorePartType">
       <xsd:complexContent>
@@ -957,11 +951,41 @@
       </xsd:complexContent>
    </xsd:complexType>
 
+   <!-- instantiationPartType -->
+   <xsd:complexType name="instantiationPartType">
+      <xsd:complexContent>
+         <xsd:extension base="instantiationType">
+            <xsd:attributeGroup ref="relationGroup"/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <!-- the date string type that we are going to use for pbcore -->
+   <xsd:complexType name="dateStringType">
+      <xsd:simpleContent>
+         <xsd:extension base="xsd:string">
+            <xsd:attribute name="dateType"/>
+         </xsd:extension>
+      </xsd:simpleContent>
+   </xsd:complexType>
+
    <!-- the string type that we are going to use for pbcore -->
    <xsd:complexType name="sourceVersionStringType">
       <xsd:simpleContent>
          <xsd:extension base="xsd:string">
             <xsd:attributeGroup ref="sourceVersionGroup"/>
+         </xsd:extension>
+      </xsd:simpleContent>
+   </xsd:complexType>
+
+   <!-- Subject String Type -->
+   <xsd:complexType name="subjectStringType">
+      <xsd:simpleContent>
+         <xsd:extension base="xsd:string">
+            <xsd:attribute name="subjectType" type="xsd:string"/>
+            <xsd:attribute name="source" type="xsd:string"/>
+            <xsd:attribute name="version" type="xsd:string"/>
+            <xsd:attribute name="annotation" type="xsd:string"/>
          </xsd:extension>
       </xsd:simpleContent>
    </xsd:complexType>
@@ -989,14 +1013,12 @@
       </xsd:simpleContent>
    </xsd:complexType>
 
-   <!-- Subject String Type -->
-   <xsd:complexType name="subjectStringType">
+   <!-- the contributor string type that we are going to use for pbcore -->
+   <xsd:complexType name="contributorStringType">
       <xsd:simpleContent>
          <xsd:extension base="xsd:string">
-            <xsd:attribute name="subjectType" type="xsd:string"/>
-            <xsd:attribute name="source" type="xsd:string"/>
-            <xsd:attribute name="version" type="xsd:string"/>
-            <xsd:attribute name="annotation" type="xsd:string"/>
+            <xsd:attribute name="portrayal" type="xsd:string"/>
+            <xsd:attributeGroup ref="sourceVersionGroup"/>
          </xsd:extension>
       </xsd:simpleContent>
    </xsd:complexType>
