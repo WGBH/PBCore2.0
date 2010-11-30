@@ -1,0 +1,1136 @@
+<?xml version="1.0" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   targetNamespace="http://www.pbcore.org/PBCore/PBCoreNamespace.html"
+   xmlns="http://www.pbcore.org/PBCore/PBCoreNamespace.html" elementFormDefault="qualified">
+   <xsd:annotation>
+      <xsd:documentation xml:lang="en">"This is the PBCore version 2.0 draft3 XML schema. All
+         element descriptions can be found at http://www.pbcore.org"</xsd:documentation>
+   </xsd:annotation>
+   <!-- optional schema version attribute -->
+   <xsd:attribute name="schemaVersion" type="xsd:string"/>
+
+   <xsd:element name="pbcoreDocumentDescription" type="pbcoreDocumentDescriptionType"/>
+
+   <xsd:element name="pbcoreCollection" type="pbcoreCollectionType"/>
+
+   <xsd:complexType name="pbcoreCollectionType">
+      <xsd:sequence>
+         <!-- everything falls under a descriptionDocument otherwise known as an asset -->
+         <xsd:element maxOccurs="unbounded" minOccurs="1" name="pbcoreDescriptionDocument"
+            type="pbcoreDocumentDescriptionType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The Master Container assembles together all
+                  collections of PBCore knowledge items. For PBCore these knowledge items are
+                  metadata descriptions of media. The MasterContainer is expressed as a document
+                  that hierarchically structures all the knowledge items and metadata terms and
+                  values related to a single data record associated with a media item. In our XML
+                  Schema Definition, the MasterContainer is referred to as the
+                  'PBCoreDescriptionDocument.'"</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="collectionTitle" type="xsd:string"/>
+      <xsd:attribute name="collectionDescription" type="xsd:string"/>
+      <xsd:attribute name="collectionSource" type="xsd:string"/>
+      <xsd:attribute name="collectionLink" type="xsd:string"/>
+      <xsd:attribute name="collectionDate" type="xsd:string"/>
+   </xsd:complexType>
+
+   <!-- pbcoreDocumentDescriptionType -->
+   <xsd:complexType name="pbcoreDocumentDescriptionType">
+      <xsd:sequence>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="pbcoreAssetType">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <!-- the pbcore asset type - this element may occur only once -->
+                  <xsd:element maxOccurs="1" minOccurs="1" name="assetType"
+                     type="sourceVersionStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"The descriptor assetKind indicates the
+                           broad editorial format of the asset’s contents. AssetType describes the
+                           PBCore record as a whole and at its highest level. Though a record may
+                           contain many instantiations of different formats and generations, for
+                           example, assetType may be used to indicate that they all represent a
+                           “program” or a “clip.” In FRBR language, assetType would be used to
+                           describe an asset at the “work” level. (Whereas “formatMediaType” would
+                           describe the “item” level.) This element is largely based on the EBUCore
+                           element ObjectType:
+                           http://www.ebu.ch/metadata/cs/ebu_ObjectTypeCodeCS.xml"
+                        </xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element maxOccurs="unbounded" minOccurs="0" name="date" type="dateStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"This is the orginal date the asset was
+                           created." </xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <!-- the pbcore identifier - this element may occur as many times as
+                      desired, however if it does occur, then a indentifier tag must appear
+                      internally (once).  optionally, a identifierSource tag may appear -->
+         <xsd:element maxOccurs="unbounded" minOccurs="1" name="pbcoreIdentifier">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="1" name="identifier" type="xsd:string">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"The descriptor identifier is used to
+                           reference or identify the entire record of metadata descriptions for a
+                           media item and exists at the top level for a PBCore description and its
+                           associated description document (XML). Best practice is to identify the
+                           media item (whether analog or digital) by means of an unambiguous string
+                           or number corresponding to an established or formal identification system
+                           if one exists. Otherwise, use an identification method that is in use
+                           within your agency, station, production company, office, or
+                           institution."</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element maxOccurs="1" minOccurs="1" name="identifierSource"
+                     type="sourceVersionStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"The descriptor identifierSource is used in
+                           combination with the unambiguous reference or identifier for a media item
+                           found in the descriptor identifier. Thus PBCore provides not only a
+                           locator number, but also an agency or institution who assigned it. Both
+                           exist at the top level for a PBCore description and its associated
+                           description document (XML)."</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <!-- the pbcore title - this element may occur as many times as
+                      desired, however if it does occur, then a title tag must appear
+                      internally (once).  optionally, a titleType tag may appear -->
+         <xsd:element maxOccurs="unbounded" minOccurs="1" name="pbcoreTitle">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="1" name="title" type="xsd:string">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"The descriptor title is a name given to
+                           the media item you are cataloging. It is the unique name everyone should
+                           use to refer to or search for a particular media item. There are
+                           obviously many types of titles a media item may have, such as a series
+                           title, episode title, segment title, or project title. Use the descriptor
+                           titleType to indicate the type of title you are assigning to the media
+                           item."</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="titleType"
+                     type="sourceVersionStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"The descriptor titleType is a companion
+                           metadata field associated with the descriptor title. For a title you give
+                           to a media item, you may wish to inform end users what type of title it
+                           is (see the picklist of recommended vocabulary
+                           terms)."</xsd:documentation>
+                        <xsd:documentation xml:lang="en">"Picklist at
+                           http://www.pbcore.org/PBCore/picklists/picklist_titleType.html"
+                        </xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <!-- the pbcore subject - this element may occur as many times as
+                      desired, however if it does occur, then a subject tag must
+                      appear (once).  optionally, a subjectAuthorityUsed tag may
+                      appear -->
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="pbcoreSubject">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="subject" type="subjectStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"The descriptor subject is used to assign
+                           topical headings or keywords that portray the intellectual content of the
+                           media item you are cataloging. Typically, a subject is expressed by a
+                           limited number of keywords, key phrases, or even specific classification
+                           codes. Controlled vocabularies, authorities, or formal classification
+                           schemes may be employed when assigning descriptive subject terms (rather
+                           than using random or ad hoc terminology)."</xsd:documentation>
+                        <xsd:documentation xml:lang="en">"Use reference at
+                           http://www.pbcore.org/PBCore/subject.html"</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="subjectAuthorityUsed"
+                     type="sourceVersionStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"If subjects are assigned to a media item
+                           using the descriptor subject and the terms used are derived from a
+                           specific authority or classification scheme, use subjectAuthorityUsed to
+                           identify whose vocabularies and terms were used."</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <!-- the pbcore description - this element may occur as many times
+                      as desired, however if it does occur, then a description tag is
+                      required.  optionally, the description type may appear - but
+                      it has a limited vocabulary -->
+         <xsd:element maxOccurs="unbounded" minOccurs="1" name="pbcoreDescription">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="1" name="description"
+                     type="descriptionStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"The metadata element description uses
+                           free-form text or a narrative to report general notes, abstracts, or
+                           summaries about the intellectual content of a media item you are
+                           cataloguing. The information may be in the form of a paragraph giving an
+                           individual program description, anecdotal interpretations, or brief
+                           content reviews. The description may also consist of outlines, lists,
+                           bullet points, rundowns, edit decision lists, indexes, or tables of
+                           content."</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="descriptionType"
+                     type="sourceVersionStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"The descriptor descriptionType is a
+                           companion metadata field to the element description. The purpose of
+                           descriptionType is to identify the nature of the actual description and
+                           flag the form of presentation for the information."</xsd:documentation>
+                        <xsd:documentation xml:lang="en">"Picklist at
+                           http://www.pbcore.org/PBCore/picklists/picklist_descriptionType.html"</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <!-- the pbcore genre - this element may occur as many times as
+                      desired, however if it does occur, then the genre tag inside is
+                      required.  that genre tag has a controlled vocabulary. -->
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="pbcoreGenre">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="genre"
+                     type="sourceVersionStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"The descriptor genre describes the manner
+                           in which the intellectual content of a media item is presented, viewed or
+                           heard by a user. It indicates the structure of the presentation, as well
+                           as the topical nature of the content in a generalized
+                           form."</xsd:documentation>
+                        <xsd:documentation xml:lang="en">"Picklist at
+                           http://www.pbcore.org/PBCore/picklists/picklist_genre.html"</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="genreAuthorityUsed"
+                     type="sourceVersionStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"If genre keywords are assigned to a media
+                           item using the descriptor genre and the terms used are derived from a
+                           specific authority or classification scheme, use genreAuthorityUsed to
+                           identify whose vocabularies and terms were used. PBcore supplies its own
+                           picklist of terms, but others may be employed as long as the authority
+                           for a picklist is identified."</xsd:documentation>
+                        <xsd:documentation xml:lang="en">When genreAuthorityUsed is not used, the
+                           default is understoond to be PBCore Genre List.</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <!-- the pbcore relation - this element may occur as many times as
+                      desired.  if it does occur, the relationIdentifier must appear,
+                      also the relationType must also appear -->
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="pbcoreRelation">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="relationType"
+                     type="sourceVersionStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"The descriptor relationType identifies the
+                           type of intellectual content bond between a media item you are cataloging
+                           and some other related media item."</xsd:documentation>
+                        <xsd:documentation xml:lang="en">"Picklist at
+                           http://www.pbcore.org/PBCore/picklists/picklist_relationType.html"</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="relationIdentifier"
+                     type="sourceVersionStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"Once the type of relationship between two
+                           media items is identified by using the descriptor relationType, then this
+                           companion descriptor relationIdentifier is used to provide a name,
+                           locator, accession, identification number or ID where the related item
+                           can be obtained or found. The cross reference uses a unique
+                           identifier."</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <!-- the pbcore coverage - this element may occur as many times as
+                      desired, and within it a Spatial or a Temporal coverageType -->
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="pbcoreCoverage">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="1" name="coverage" type="xsd:string">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en"> "The descriptor coverage uses keywords to
+                           identify a span of space or time that is expressed by the intellectual
+                           content of a media item. Coverage in intellectual content may be
+                           expressed spatially by geographic location. Actual place names may be
+                           used. Numeric coordinates and geo-spatial data are also allowable, if
+                           useful or supplied. Coverage in intellectual content may also be
+                           expressed temporally by a date, period, era, or time-based event. The
+                           PBCore metadata element coverage houses the actual spatial or temporal
+                           keywords. The companion descriptor coverageType is used to identify the
+                           type of keywords that are being used."</xsd:documentation>
+                        <xsd:documentation xml:lang="en">"Use reference at
+                           http://www.pbcore.org/PBCore/coverage.html"</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element maxOccurs="1" minOccurs="1" name="coverageType">
+                     <xsd:complexType>
+                        <xsd:annotation>
+                           <xsd:documentation xml:lang="en">"Whereas the PBCore metadata element
+                              coverage uses keywords and descriptors to identify a span of space or
+                              time that is expressed by the intellectual content of a media item,
+                              coverageType is used to identify the actual type of keywords that are
+                              being used. Coverage in intellectual content may be expressed
+                              spatially by geographic location. Coverage in intellectual content may
+                              also be expressed temporally by a date, period, era, or time-based
+                              event. coverageType provides a picklist of coverage types, namely
+                              *spatial* or *temporal*." </xsd:documentation>
+                        </xsd:annotation>
+                        <xsd:simpleContent>
+                           <!-- COME BACK TO THIS -->
+                           <xsd:restriction base="sourceVersionStringType">
+                              <xsd:enumeration value="Spatial"/>
+                              <xsd:enumeration value="Temporal"/>
+                           </xsd:restriction>
+                        </xsd:simpleContent>
+                     </xsd:complexType>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <!-- the pbcore audienceLevel - this may occur as many times as desired
+                      within the document -->
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="pbcoreAudienceLevel">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="audienceLevel"
+                     type="sourceVersionStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"The descriptor audienceLevel identifies a
+                           type of audience, viewer, or listener for whom the media item you are
+                           cataloging is primarily designed or educationally
+                           useful."</xsd:documentation>
+                        <xsd:documentation xml:lang="en">"Picklist at
+                           http://www.pbcore.org/PBCore/picklists/picklist_audienceLevel.html"</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <!-- the pbcore audienceRating - this may occur as many times as desired
+                      within the document -->
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="pbcoreAudienceRating">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="audienceRating"
+                     type="sourceVersionStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"The descriptor audienceRating designates
+                           the type of users for whom a media item is intended or judged appropriate
+                           in terms of its intellectual content. Standard ratings have been crafted
+                           by the broadcast television and film industries and are used as flags for
+                           audience or age-appropriate materials."</xsd:documentation>
+                        <xsd:documentation xml:lang="en">"Picklist at
+                           http://www.pbcore.org/PBCore/picklists/picklist_audienceRating.html"</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <!-- the pbcore creator - again, may appear as many times as
+                      necessary, and the creator tag is necessary inside.  the
+                      creatorRole tag is optional. -->
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="pbcoreCreator">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="1" name="creator"
+                     type="affiliatedStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"The descriptor creator identifies a person
+                           or organization primarily responsible for creating a media item. The
+                           creator may be considered an author and could be one or more people, a
+                           business, organization, group, project or service." </xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element maxOccurs="unbounded" minOccurs="1" name="creatorRole"
+                     type="sourceVersionStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"Use the descriptor creatorRole to identify
+                           the role played by the person or group identified in the companion
+                           descriptor creator. Unlike print resources, there is usually no single
+                           role, like an author, who has primary responsibility for the creation of
+                           media items such as audio, video, film assets, and their digital
+                           renditions. For these media, creators can fill many different roles, such
+                           as the instructor for a video course, the interviewee from a video
+                           history program, or the director of a program or film (if they are
+                           identified as the primary creator for a media item)."</xsd:documentation>
+                        <xsd:documentation xml:lang="en">"Picklist at
+                           http://www.pbcore.org/PBCore/picklists/picklist_creatorRole.html"</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <!-- the pbcore contributor - this element may appear as many times
+                      as necessary, but when it does appear, the contributor tag must
+                      appear inside it.  the contributor role is optional. -->
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="pbcoreContributor">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="1" name="contributor"
+                     type="affiliatedStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"The descriptor contributor identifies a
+                           person or organization that has made substantial creative contributions
+                           to the intellectual content within a media item. This contribution is
+                           considered to be secondary to the primary author(s) (person or
+                           organization) identified in the descriptor creator."</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element maxOccurs="unbounded" minOccurs="1" name="contributorRole"
+                     type="contributorStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"Use the descriptor contributorRole to
+                           identify the role played by the person or group identified in the
+                           companion descriptor contributor."</xsd:documentation>
+                        <xsd:documentation xml:lang="en">"Picklist at
+                           http://www.pbcore.org/PBCore/picklists/picklist_contributorRole.html"</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <!-- the pbcore publisher - this follows the same guidelines as the
+                      contributor and the creator.  this may exist as many times as
+                      we wish, but inside it there must be a publisher tag.  a
+                      publisherRole tag is optional. -->
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="pbcorePublisher">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="1" name="publisher"
+                     type="affiliatedStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"The descriptor publisher identifies a
+                           person or organization primarily responsible for distributing or making a
+                           media item available to others. The publisher may be a person, a
+                           business, organization, group, project or service."</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element maxOccurs="unbounded" minOccurs="1" name="publisherRole"
+                     type="sourceVersionStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"Use the descriptor publisherRole to
+                           identify the role played by the specific publisher or publishing entity
+                           identified in the companion descriptor publisher."</xsd:documentation>
+                        <xsd:documentation xml:lang="en">"Picklist at
+                           http://www.pbcore.org/PBCore/picklists/picklist_publisherRole.html"</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <!-- the pbcore rights - this may appear as many times as we want,
+                      but everytime it does appear, the rightsSummary tag must appear
+                      inside of it -->
+         <xsd:element name="pbcoreRightsSummary" type="rightsSummaryType" maxOccurs="unbounded"
+            minOccurs="0">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en"> "The Rights for all Instantiations or General
+                  Rights." </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- the pbcore instantiation - this contains all the details on how
+                      the asset is actualized -->
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="pbcoreInstantiation"
+            type="instantiationType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en"> "Instantiations" </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- PBCore Annotation -->
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="pbcoreAnnotation"
+            type="annotationStringType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor annotation is an element where you
+                  can catalog any supplementary information about the metadata used to describe the
+                  PBCore record. annotation clarifies element values, terms, descriptors, and
+                  vocabularies that may not be otherwise sufficiently
+                  understood."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- PBCore Part -->
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="pbcorePart" type="pbcorePartType">
+            <xsd:annotation>
+               <xsd:documentation/>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- PBCore Extension -->
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="pbcoreExtension">
+            <xsd:annotation>
+               <xsd:documentation/>
+            </xsd:annotation>
+            <xsd:complexType>
+               <xsd:choice>
+                  <xsd:element maxOccurs="unbounded" minOccurs="0" name="extensionWrap">
+                     <xsd:complexType>
+                        <xsd:sequence>
+                           <xsd:element maxOccurs="1" minOccurs="1" name="extensionElement"
+                              type="xsd:string">
+                              <xsd:annotation>
+                                 <xsd:documentation xml:lang="en">"The descriptor extension provides
+                                    metadata descriptions crafted into metadata dictionaries and
+                                    schemas outside of the PBCore Metadata Dictionary Project. These
+                                    extensions fulfill the metadata requirements for communities
+                                    identifying and describing their own types of media with
+                                    specialized, custom terminologies."</xsd:documentation>
+                              </xsd:annotation>
+                           </xsd:element>
+                           <xsd:element maxOccurs="1" minOccurs="1" name="extensionValue"
+                              type="xsd:string">
+                              <xsd:annotation>
+                                 <xsd:documentation xml:lang="en">"The descriptor
+                                    extension"</xsd:documentation>
+                              </xsd:annotation>
+                           </xsd:element>
+                           <xsd:element maxOccurs="1" minOccurs="1" name="extensionAuthorityUsed"
+                              type="xsd:anyURI">
+                              <xsd:annotation>
+                                 <xsd:documentation xml:lang="en">"If metadata extensions to PBCore
+                                    are assigned to a media item with the descriptor extension, and
+                                    the terms used are derived from a specific authority or metadata
+                                    scheme, use extensionAuthorityUsed to identify whose metadata
+                                    extensions are being used."</xsd:documentation>
+                              </xsd:annotation>
+                           </xsd:element>
+                        </xsd:sequence>
+                        <xsd:attribute name="annotation" type="xsd:string"/>
+                     </xsd:complexType>
+                  </xsd:element>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="extensionEmbedded"
+                     type="embeddedType"> </xsd:element>
+               </xsd:choice>
+            </xsd:complexType>
+         </xsd:element>
+         <!-- For Readability - documentDescription sequence end -->
+      </xsd:sequence>
+      <!-- For Readability - documentDescription complexType end -->
+   </xsd:complexType>
+
+   <!-- Instantiation Type -->
+   <xsd:complexType name="instantiationType">
+      <xsd:sequence>
+         <!-- the pbcore format identifier -->
+         <xsd:element maxOccurs="unbounded" minOccurs="1" name="instantiationID">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="1" name="instantiationIdentifier"
+                     type="xsd:string">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"The descriptor formatIdentifier employs an
+                           unambiguous reference or identifier for a particular
+                           rendition/instantiation of a media item. Best practice is to identify the
+                           media item (whether analog or digital) by means of a string or number
+                           corresponding to an established or formal identification system if one
+                           exists. Otherwise, use an identification method that is in use within
+                           your agency, station, production company, office, or
+                           institution."</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element maxOccurs="1" minOccurs="1" name="instantiationIdentifierSource"
+                     type="sourceVersionStringType">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"The descriptor formatIdentifierSource is
+                           used in combination with the unambiguous reference or identifier for a
+                           rendition/instantiation of a media item as found in the descriptor
+                           formatIdentifier. Thus PBCore provides not only a locator number, but
+                           also indicates an agency or institution who assigned
+                           it."</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <!-- pbcore date created -->
+         <xsd:element maxOccurs="1" minOccurs="0" name="instantiationDateCreated" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"Use the descriptor dateCreated to specify the
+                  creation date for a particular version or rendition of a media item across its
+                  life cycle. It is the moment in time that the media item was finalized during its
+                  production process and is forwarded to other divisions or agencies to make it
+                  ready for publication or distribution. A specific time may also be associated with
+                  the date."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- pbcore date issued -->
+         <xsd:element maxOccurs="1" minOccurs="0" name="dateIssued" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor dateIssued specifies the formal date
+                  for a particular version or rendition of a media item has been made ready or
+                  officially released for distribution, publication or consumption. A specific time
+                  may also be associated with the date."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- the pbcore formatPhysical -->
+         <xsd:element maxOccurs="1" minOccurs="0" name="formatPhysical"
+            type="sourceVersionStringType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"Use the descriptor formatPhysical to identify the
+                  format of a particular version or rendition of a media item as it exists in an
+                  actual physical form that occupies physical space (e.g., a tape on a shelf),
+                  rather than as a digital file residing on a server or hard
+                  drive."</xsd:documentation>
+               <xsd:documentation xml:lang="en">"Picklist at
+                  http://www.pbcore.org/PBCore/picklists/picklist_formatPhysical.html"</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- the pbcore formatDigital-->
+         <xsd:element maxOccurs="1" minOccurs="0" name="formatDigital"
+            type="sourceVersionStringType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"Use the descriptor formatDigital to identify the
+                  format of a particular version or rendition of a media item as it exists in its
+                  digital form, i.e., as a digital file on a server or hard drive. Digital media
+                  formats may be expressed with formal Internet MIME types."</xsd:documentation>
+               <xsd:documentation xml:lang="en">"MIME types change often see references at
+                  http://www.pbcore.org/PBCore/formatDigital.html"</xsd:documentation>
+               <xsd:documentation xml:lang="en">"Picklist may not be up to date at
+                  http://www.pbcore.org/PBCore/picklists/picklist_formatDigital.html"</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- the pbcore formatLocation-->
+         <xsd:element maxOccurs="1" minOccurs="1" name="formatLocation" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor formatLocation is considered to be
+                  an "address for a media item." For an organization or producer acting as caretaker
+                  of a media resource, formatLocation may contain information about a specific shelf
+                  location for an asset, including an organization's name, departmental name, shelf
+                  ID and contact information. The formatLocation for a data file or web page may
+                  include domain, path, filename or html page."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- the pbcore formatmediatype -->
+         <xsd:element maxOccurs="1" minOccurs="0" name="formatMediaType"
+            type="sourceVersionStringType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor formatMediaType identifies the
+                  general, high level nature of the content of a media item. It uses categories that
+                  show how content is presented to an observer, e.g., as a sound or text or moving
+                  image."</xsd:documentation>
+               <xsd:documentation xml:lang="en">"Picklist at
+                  http://www.pbcore.org/PBCore/picklists/picklist_formatMediaType.html"</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- the pbcore formatgenerations -->
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="formatGenerations"
+            type="sourceVersionStringType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor formatGenerations identifies the
+                  particular use or manner in which a version or rendition of a media item is used,
+                  e.g., Audio/Narration or Moving image/Backup master."</xsd:documentation>
+               <xsd:documentation xml:lang="en">"Picklist at
+                  http://www.pbcore.org/PBCore/picklists/picklist_formatGenerations.html"</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!--  the pbcore formatfilesize -->
+         <xsd:element maxOccurs="1" minOccurs="0" name="formatFileSize" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"Use the descriptor formatFileSize to indicate the
+                  storage requirements or file size of a digital media item. As a standard, express
+                  the file size in bytes."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!--  the pbcore formattimestart-->
+         <xsd:element maxOccurs="1" minOccurs="0" name="formatTimeStart" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor formatTimeStart provides a time
+                  stamp for the beginning point of playback for a time-based media item, such as
+                  digital video or audio. Use in combination with formatDuration to identify a
+                  sequence or segment of a media item that has a fixed start time and end
+                  time."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!--  the pbcore formatduration-->
+         <xsd:element maxOccurs="1" minOccurs="0" name="formatDuration" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor formatDuration provides a timestamp
+                  for the overall length or duration of a time-based media item. It represents the
+                  playback time."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!--  the pbcore formatdatarate-->
+         <xsd:element maxOccurs="1" minOccurs="0" name="formatDataRate" type="technicalStringType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor formatDataRate is expresses the
+                  amount of data in a digital media file that is encoded, delivered or distributed,
+                  for every second of time. Although optimal data rates are often dependent on the
+                  codec used to compress and encode a digital file, generally speaking, a larger
+                  data rate translates into a better quality playback experience, for example 56
+                  kilobits/second vs. 1 megabit/second."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- the pbcore formatcolors -->
+         <xsd:element maxOccurs="1" minOccurs="0" name="formatColors" type="sourceVersionStringType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor formatColors indicates the overall
+                  color, grayscale, or black and white nature of a media item, as a single
+                  occurrence or combination of occurrences in or throughout the media
+                  item."</xsd:documentation>
+               <xsd:documentation xml:lang="en">"Picklist at
+                  http://www.pbcore.org/PBCore/picklists/picklist_formatColors.html"</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!--  the pbcore formattracks-->
+         <xsd:element maxOccurs="1" minOccurs="0" name="formatTracks" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor formatTracks is simply intended to
+                  indicate the number and type of tracks that are found in a media item, whether it
+                  is analog or digital. For example, 1 video track, 2 audio tracks, 1 text track, 1
+                  sprite track, etc. Other configuration information specific to these identified
+                  tracks should be described using formatChannelConfiguration."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!--  the pbcore formatchannelconfiguration-->
+         <xsd:element maxOccurs="1" minOccurs="0" name="formatChannelConfiguration"
+            type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor formatChannelConfiguration is
+                  designed to indicate the arrangement or configuration of specific channels or
+                  layers of information within a media item's tracks. Examples are 2-track mono, 8
+                  track stereo, or video track with alpha channel."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- the pbcore language -->
+         <xsd:element name="language" type="threeLetterStringType" maxOccurs="1" minOccurs="0">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor language identifies the primary
+                  language of a media item's audio or text. Alternative audio or text tracks and
+                  their associated languages should be identified using the descriptor
+                  alternativeModes."</xsd:documentation>
+               <xsd:documentation xml:lang="en">"Use reference at
+                  http://www.pbcore.org/PBCore/language.html"</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- the pbcore alternative modes -->
+         <xsd:element maxOccurs="1" minOccurs="0" name="alternativeModes" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor alternativeModes is a catch-all
+                  metadata element that identifies equivalent alternatives to the primary visual,
+                  sound or textual information that exists in a media item. These are modes that
+                  offer alternative ways to see, hear, and read the content of a media item.
+                  Examples include DVI (Descriptive Video Information), SAP (Supplementary Audio
+                  Program), ClosedCaptions, OpenCaptions, Subtitles, Language Dubs, and Transcripts.
+                  For each instance of available alternativeModes, the mode and its associated
+                  language should be identified together, if applicable. Examples include 'SAP in
+                  English,' 'SAP in Spanish,' 'Subtitle in French,' 'OpenCaption in
+                  Arabic.'"</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- the pbcore essence tracks -->
+         <xsd:element maxOccurs="unbounded" minOccurs="1" name="instantiationEssenceTrack"
+            type="essenceTrackType"> </xsd:element>
+         <!-- the pbcore dateAvailable -->
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="instantiationDateAvailable">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="dateAvailableStart"
+                     type="xsd:string">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"The descriptor dateAvailableStart
+                           specifies a specific start date for the availability of a version or
+                           rendition of a media item. It may refer to start dates for the
+                           availability of a program that is broadcast locally, regionally,
+                           nationally or internationally, or for web-based distribution. A specific
+                           time may also be associated with the date."</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="dateAvailableEnd" type="xsd:string">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">"The descriptor dateAvailableEnd specifies
+                           a specific end date for the availability of a version or rendition of a
+                           media item. It may refer to end dates for the availability of a program
+                           that is broadcast locally, regionally, nationally or internationally, or
+                           for web-based distribution. A specific time may also be associated with
+                           the date."</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <!-- Instantiation Rights -->
+         <xsd:element name="instantiationRights" type="rightsSummaryType" maxOccurs="unbounded"
+            minOccurs="0">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en"> "The Rights for this particular instantiation."
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- Instantiation Annotation -->
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="instantiationAnnotation"
+            type="annotationStringType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor annotation is element where you can
+                  catalog any supplementary information about an instantiation of the media item or
+                  the metadata used to describe it. annotation clarifies element values, terms,
+                  descriptors, and vocabularies that may not be otherwise sufficiently
+                  understood."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- Instaniation Part -->
+         <xsd:element name="instantiationPart" type="instantiationPartType" maxOccurs="unbounded"
+            minOccurs="0"> </xsd:element>
+         <!-- For Readability - Instantiation sequence end -->
+      </xsd:sequence>
+      <!-- For Readability - Instantiation complexType end -->
+   </xsd:complexType>
+
+   <!-- Essense Track Type -->
+   <xsd:complexType name="essenceTrackType">
+      <xsd:sequence>
+         <!-- the pbcore essence tracks -->
+         <xsd:element maxOccurs="1" minOccurs="0" name="essenceTrackType" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">""</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- Essence Track IDs -->
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="essenceTrackID">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <!-- the pbcore essence track identifier -->
+                  <xsd:element maxOccurs="1" minOccurs="1" name="essenceTrackIdentifier"
+                     type="xsd:string">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">""</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+                  <!-- the pbcore essence track identifier source -->
+                  <xsd:element maxOccurs="1" minOccurs="1" name="essenceTrackIdentifierSource"
+                     type="xsd:string">
+                     <xsd:annotation>
+                        <xsd:documentation xml:lang="en">""</xsd:documentation>
+                     </xsd:annotation>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <!-- the pbcore format standard -->
+         <xsd:element maxOccurs="1" minOccurs="0" name="essenceTrackStandard"
+            type="sourceVersionStringType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"Use the descriptor essenceTrackStandard to identify
+                  a larger technical system/standard or overarching media architecture under which
+                  various media formats exist, e.g., NTSC is a system/standard under which many
+                  video formats exist."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!--  the pbcore essence track encoding -->
+         <xsd:element maxOccurs="1" minOccurs="0" name="essenceTrackEncoding" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor essenceEncoding identifies how the
+                  actual information in a media item is compressed, interpreted, or formulated using
+                  a particular scheme. Identifying the encoding used is beneficial for a number of
+                  reasons, including as a way to achieve reversible compression; for the
+                  construction of document indices to facilitate searching and access; or for
+                  efficient distribution of the information across data networks with differing
+                  bandwidths or pipeline capacities."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!--  the pbcore essence track data rate-->
+         <xsd:element maxOccurs="1" minOccurs="0" name="essenceTrackDataRate"
+            type="technicalStringType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor essenceTrackDataRate is expresses
+                  the amount of data in a digital media file that is encoded, delivered or
+                  distributed, for every second of time. Although optimal data rates are often
+                  dependent on the codec used to compress and encode a digital file, generally
+                  speaking, a larger data rate translates into a better quality playback experience,
+                  for example 56 kilobits/second vs. 1 megabit/second."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!--  the pbcore essence time start-->
+         <xsd:element maxOccurs="1" minOccurs="0" name="essenceTrackTimeStart" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor essenceTrackTimeStart provides a
+                  time stamp for the beginning point of playback for a time-based media item, such
+                  as digital video or audio. Use in combination with essenceTrackDuration to
+                  identify a sequence or segment of a media item that has a fixed start time and end
+                  time."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!--  the pbcore essence track duration-->
+         <xsd:element maxOccurs="1" minOccurs="0" name="essenceTrackDuration" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor formatDuration provides a timestamp
+                  for the overall length or duration of a time-based media item. It represents the
+                  playback time."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- the pbcore essence track bit depth -->
+         <xsd:element maxOccurs="1" minOccurs="0" name="essenceTrackBitDepth"
+            type="sourceVersionStringType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"For a media item (specifically, audio, video, or
+                  image), the descriptor essenceTrackBitDepth measures "How Much" data is sampled
+                  when information is digitized, encoded, or converted. Bit depth is measured in
+                  bits and is an indicator of the perceived viewing or playback quality of a media
+                  item (the higher the bit depth, the greater the fidelity)."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- the pbcore essence track sampling rate -->
+         <xsd:element maxOccurs="1" minOccurs="0" name="essenceTrackSamplingRate"
+            type="sourceVersionStringType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"For a media item (specifically audio), the
+                  descriptor essenceTrackSamplingRate measures "How Often " data is sampled when
+                  information is digitized. For a digital audio signal, the sampling rate is
+                  measured in kiloHertz and is an indicator of the perceived playback quality of the
+                  media item (the higher the sampling rate, the greater the
+                  fidelity)."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- the pbcore essence track frame size -->
+         <xsd:element maxOccurs="1" minOccurs="0" name="essenceTrackFrameSize"
+            type="sourceVersionStringType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor essenceTrackFrameSize indicates the
+                  horizontal and vertical resolution of a format type. It may be expressed in
+                  pixels, pixels per inch, or in the case of ATSC digital TV, a combination of
+                  pixels measured horizontally vs. the number of pixels of image/resolution data
+                  stacked vertically (interlaced and progressive scan)."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- the pbcore essence aspect ratio -->
+         <xsd:element maxOccurs="1" minOccurs="0" name="essenceTrackAspectRatio"
+            type="sourceVersionStringType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor essenceTrackAspectRatio indicates
+                  the ratio of horizontal to vertical proportions in the display of an static image
+                  or moving image."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- the pbcore essense frame rate -->
+         <xsd:element maxOccurs="1" minOccurs="0" name="essenceTrackFrameRate"
+            type="sourceVersionStringType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor essenceTrackFrameRate indicates the
+                  frames per second found in a video, motion sequence, flash file, or animation's
+                  playback or display."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- the pbcore essence track language -->
+         <xsd:element maxOccurs="1" minOccurs="0" name="essenceTrackLanguage"
+            type="threeLetterStringType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor essenceTrackLanguage identifies the
+                  primary language of the tracks audio or text. Alternative audio or text tracks and
+                  their associated languages should be identified using the descriptor
+                  alternativeModes."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <!-- the pbcore essence track annotation -->
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="essenceTrackAnnotation"
+            type="annotationStringType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"The descriptor essenceTrackAnnotation is a element
+                  where you can catalog any supplementary information about a track or the metadata
+                  used to describe it. annotation clarifies element values, terms, descriptors, and
+                  vocabularies that may not be otherwise sufficiently
+                  understood."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <!-- pbcorePartType -->
+   <xsd:complexType name="pbcorePartType">
+      <xsd:complexContent>
+         <xsd:extension base="pbcoreDocumentDescriptionType">
+            <xsd:attributeGroup ref="relationGroup"/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <!-- instantiationPartType -->
+   <xsd:complexType name="instantiationPartType">
+      <xsd:complexContent>
+         <xsd:extension base="instantiationType">
+            <xsd:attributeGroup ref="relationGroup"/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <!-- the date string type that we are going to use for pbcore -->
+   <xsd:complexType name="dateStringType">
+      <xsd:simpleContent>
+         <xsd:extension base="xsd:string">
+            <xsd:attribute name="dateType"/>
+         </xsd:extension>
+      </xsd:simpleContent>
+   </xsd:complexType>
+
+   <!-- the string type that we are going to use for pbcore -->
+   <xsd:complexType name="sourceVersionStringType">
+      <xsd:simpleContent>
+         <xsd:extension base="xsd:string">
+            <xsd:attributeGroup ref="sourceVersionGroup"/>
+         </xsd:extension>
+      </xsd:simpleContent>
+   </xsd:complexType>
+
+   <!-- Subject String Type -->
+   <xsd:complexType name="subjectStringType">
+      <xsd:simpleContent>
+         <xsd:extension base="xsd:string">
+            <xsd:attribute name="subjectType" type="xsd:string"/>
+            <xsd:attribute name="source" type="xsd:string"/>
+            <xsd:attribute name="version" type="xsd:string"/>
+            <xsd:attribute name="annotation" type="xsd:string"/>
+         </xsd:extension>
+      </xsd:simpleContent>
+   </xsd:complexType>
+
+   <!-- descriptionType -->
+   <xsd:complexType name="descriptionStringType">
+      <xsd:simpleContent>
+         <xsd:extension base="xsd:string">
+            <xsd:attribute name="startTime" type="xsd:string"/>
+            <xsd:attribute name="endTime" type="xsd:string"/>
+            <xsd:attribute name="segmentType" type="xsd:string"/>
+            <xsd:attribute name="annotation" type="xsd:string"/>
+         </xsd:extension>
+      </xsd:simpleContent>
+   </xsd:complexType>
+
+   <!-- Affiliation String Type -->
+   <xsd:complexType name="affiliatedStringType">
+      <xsd:simpleContent>
+         <xsd:extension base="xsd:string">
+            <xsd:attribute name="affiliation"/>
+            <xsd:attribute name="linkedID"/>
+            <xsd:attribute name="annotation"/>
+         </xsd:extension>
+      </xsd:simpleContent>
+   </xsd:complexType>
+
+   <!-- the contributor string type that we are going to use for pbcore -->
+   <xsd:complexType name="contributorStringType">
+      <xsd:simpleContent>
+         <xsd:extension base="xsd:string">
+            <xsd:attribute name="portrayal" type="xsd:string"/>
+            <xsd:attributeGroup ref="sourceVersionGroup"/>
+         </xsd:extension>
+      </xsd:simpleContent>
+   </xsd:complexType>
+
+   <!-- Technical String Type  -->
+   <xsd:complexType name="technicalStringType">
+      <xsd:simpleContent>
+         <xsd:extension base="xsd:string">
+            <xsd:attribute name="unitsOfMeasure"/>
+            <xsd:attribute name="annotation"/>
+         </xsd:extension>
+      </xsd:simpleContent>
+   </xsd:complexType>
+
+   <!-- Annotation String Type  -->
+   <xsd:complexType name="annotationStringType">
+      <xsd:simpleContent>
+         <xsd:extension base="xsd:string">
+            <xsd:attribute name="annotationType"/>
+         </xsd:extension>
+      </xsd:simpleContent>
+   </xsd:complexType>
+
+   <!-- RightsSummeryType -->
+   <xsd:complexType name="rightsSummaryType">
+      <xsd:choice>
+         <xsd:element maxOccurs="1" minOccurs="0" name="rightsSummary"
+            type="sourceVersionStringType">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">"Use the descriptor rightsSummary as an all-purpose
+                  container field to identify information about copyrights and property rights held
+                  in and over a media item, whether they are open access or restricted in some way.
+                  If dates, times and availability periods are associated with a right, include
+                  them. End user permissions, constraints and obligations may also be identified, as
+                  needed."</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element maxOccurs="1" minOccurs="0" name="rightsLink" type="rightsLinkType">
+            <xsd:annotation>
+               <xsd:documentation>A URI pointing to a declaration of rights</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="rightsEmbedded" type="embeddedType" maxOccurs="1" minOccurs="0"/>
+      </xsd:choice>
+   </xsd:complexType>
+
+   <!-- Rights Link Type -->
+   <xsd:complexType name="rightsLinkType">
+      <xsd:simpleContent>
+         <xsd:extension base="xsd:anyURI">
+            <xsd:attribute name="annotation" type="xsd:string"/>
+         </xsd:extension>
+      </xsd:simpleContent>
+   </xsd:complexType>
+
+   <!-- Embedded Type -->
+   <xsd:complexType name="embeddedType">
+      <xsd:sequence>
+         <xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+      <xsd:attribute name="annotation" type="xsd:string"/>
+   </xsd:complexType>
+
+   <!--  the three letter string type that we are going to use for language -->
+   <xsd:complexType name="threeLetterStringType">
+      <xsd:simpleContent>
+         <xsd:extension base="threeLetterCode">
+            <xsd:attributeGroup ref="sourceVersionGroup"/>
+         </xsd:extension>
+      </xsd:simpleContent>
+   </xsd:complexType>
+
+   <!-- threelettercode Algorithm -->
+   <xsd:simpleType name="threeLetterCode">
+      <xsd:restriction base="xsd:string">
+         <xsd:pattern value="([a-z]{3}((;[a-z]{3})?)*)?"/>
+         <!-- allows for null -->
+      </xsd:restriction>
+   </xsd:simpleType>
+
+   <!-- Standard Attribute Group -->
+   <xsd:attributeGroup name="sourceVersionGroup">
+      <xsd:attribute name="source" type="xsd:string"/>
+      <xsd:attribute name="version" type="xsd:string"/>
+      <xsd:attribute name="annotation" type="xsd:string"/>
+   </xsd:attributeGroup>
+
+   <!-- Relationship Group -->
+   <xsd:attributeGroup name="relationGroup">
+      <xsd:attribute name="relationType" type="xsd:string">
+         <xsd:annotation>
+            <xsd:documentation>"This attribute relate this part to another. It could be a episode in
+               a series or a program segment recorded on many tapes."</xsd:documentation>
+         </xsd:annotation>
+      </xsd:attribute>
+      <xsd:attribute name="relationID" type="xsd:string">
+         <xsd:annotation>
+            <xsd:documentation>This part is then referenced to another part."</xsd:documentation>
+         </xsd:annotation>
+      </xsd:attribute>
+      <xsd:attribute name="annotation" type="xsd:string"/>
+   </xsd:attributeGroup>
+
+</xsd:schema>
