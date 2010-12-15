@@ -3,21 +3,22 @@
    targetNamespace="http://www.pbcore.org/PBCore/PBCoreNamespace.html"
    xmlns="http://www.pbcore.org/PBCore/PBCoreNamespace.html" elementFormDefault="qualified">
    <xsd:annotation>
-      <xsd:documentation xml:lang="en">"This is the PBCore version 2.0 draft3 XML schema. All
+      <xsd:documentation xml:lang="en">"This is the PBCore version 2.0 draft7 XML schema. All
          element descriptions can be found at http://www.pbcore.org"</xsd:documentation>
    </xsd:annotation>
    <!-- optional schema version attribute -->
-   <xsd:attribute name="schemaVersion" type="xsd:string"/>
+   <xsd:attribute name="schemaVersion" default="2.0" type="xsd:string"/>
 
-   <xsd:element name="pbcoreDocumentDescription" type="pbcoreDocumentDescriptionType"/>
+   <xsd:element name="pbcoreInstantiationDocument" type="instantiationType"/>
+
+   <xsd:element name="pbcoreDescriptionDocument" type="pbcoreDescriptionDocumentType"/>
 
    <xsd:element name="pbcoreCollection" type="pbcoreCollectionType"/>
 
    <xsd:complexType name="pbcoreCollectionType">
       <xsd:sequence>
          <!-- everything falls under a descriptionDocument otherwise known as an asset -->
-         <xsd:element maxOccurs="unbounded" minOccurs="1" name="pbcoreDescriptionDocument"
-            type="pbcoreDocumentDescriptionType">
+         <xsd:element maxOccurs="unbounded" minOccurs="1" ref="pbcoreDescriptionDocument">
             <xsd:annotation>
                <xsd:documentation xml:lang="en">"The Master Container assembles together all
                   collections of PBCore knowledge items. For PBCore these knowledge items are
@@ -36,8 +37,8 @@
       <xsd:attribute name="collectionDate" type="xsd:string"/>
    </xsd:complexType>
 
-   <!-- pbcoreDocumentDescriptionType -->
-   <xsd:complexType name="pbcoreDocumentDescriptionType">
+   <!-- pbcoreDescriptionDocumentType -->
+   <xsd:complexType name="pbcoreDescriptionDocumentType">
       <xsd:sequence>
          <xsd:element maxOccurs="unbounded" minOccurs="0" name="pbcoreAssetType">
             <xsd:complexType>
@@ -523,9 +524,9 @@
                </xsd:choice>
             </xsd:complexType>
          </xsd:element>
-         <!-- For Readability - documentDescription sequence end -->
+         <!-- For Readability - DescriptionDocument sequence end -->
       </xsd:sequence>
-      <!-- For Readability - documentDescription complexType end -->
+      <!-- For Readability - DescriptionDocument complexType end -->
    </xsd:complexType>
 
    <!-- Instantiation Type -->
@@ -788,10 +789,11 @@
             </xsd:annotation>
          </xsd:element>
          <!-- Instaniation Part -->
-         <xsd:element name="instantiationPart" type="instantiationPartType" maxOccurs="unbounded"
+         <xsd:element name="instantiationPart" type="instantiationType" maxOccurs="unbounded"
             minOccurs="0"> </xsd:element>
          <!-- For Readability - Instantiation sequence end -->
       </xsd:sequence>
+      <xsd:attributeGroup ref="relationGroup"/>
       <!-- For Readability - Instantiation complexType end -->
    </xsd:complexType>
 
@@ -956,16 +958,7 @@
    <!-- pbcorePartType -->
    <xsd:complexType name="pbcorePartType">
       <xsd:complexContent>
-         <xsd:extension base="pbcoreDocumentDescriptionType">
-            <xsd:attributeGroup ref="relationGroup"/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-
-   <!-- instantiationPartType -->
-   <xsd:complexType name="instantiationPartType">
-      <xsd:complexContent>
-         <xsd:extension base="instantiationType">
+         <xsd:extension base="pbcoreDescriptionDocumentType">
             <xsd:attributeGroup ref="relationGroup"/>
          </xsd:extension>
       </xsd:complexContent>
