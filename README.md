@@ -38,3 +38,13 @@ The required core elements of PBCore have not changed in the 2.0 schema. Attribu
 What the 2.0 schema does is fix problems identified by the PBCore user community. Many people contributed change requests, blog posts, questions, commentary, criticism, and research. The development and review teams solicited additional feedback on early versions. As they work with PBCore 2.0, users will undoubtedly discover things that can be further refined and improved. The [PBCore 2.0 Schema](http://pbcore.org/schema/) is the result of a true community effort, and that effort should continue.
 
 You will discover more as you explore PBCore 2.0 and begin using it with your assets and collections. The Schema Review team believes this release is a huge step forward to improve the standard, but as always, we look forward to your comments.
+
+Use of this repository
+----------------------
+
+The PBCore team has decied to open the PBCore 2.0 repostiory in order to better share the deliberations that went in to making version 2.0 and also to allow an even wider community to participate in revisions. 
+
+If there are changes you would like to recommend for the next version of PBCore, you can submit issues through the issue tracker on GitHub (look for the Issues tab above). And if you want to submit patches to the schema, please fork this repository and push them. We will consider your patches for the next release of PBCore (which has not yet been scheduled). 
+
+As always, you can also comment on PBCore at PBcore.org and at PBCoreResources.org
+
