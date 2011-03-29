@@ -10,18 +10,18 @@ What’s New in 2.0
 
 Since its introduction in 2005, PBCore has gained wide acceptance because it provides a thorough yet simple way to describe media assets. The 2.0 schema builds on the main PBCore elements without compromising its ease of use. That said, those familiar with PBCore 1.x will recognize significant differences:
 
-    * The addition of optional attributes in many elements.
-    * The ability to describe “multi-part instantiations,” i.e. a single media production comprised of more than one film, tape, or file.
-    * The inclusion of rights information at the Instantiation level, not just the Intellectual Description level.
-    * The option to include markup from other existing rights metadata standards, e.g. ODRL or Creative Commons.
-    * A simple way to show relationships between Instantiations, for example that an MPEG4 Instantiation was encoded from a QuickTime Instantiation.
-    * The ability to specify time-based metadata within an asset, e.g. where exactly in the timeline a particular subject is discussed or a specific person appears.
-    * New core elements that resolve thorny issues encountered by PBCore users: pbcoreAssetType allows you to indicate the “broad editorial format” of the asset, e.g. a program, a clip, an episode, or a scene.
-    * pbcoreAssetDate provides, for the first time, a way to specify the creation date of the asset, not just its Instantiations.
-    * It is now valid to have an asset with no Instantiations, so you can have an Intellectual Description of an asset for which no Instantiations yet exist. And conversely, you can have an Instantiation Only asset with the new root tag pbcoreInstantiationDocument.
-    * The addition of a new pbcoreCollection element allows the wrapping of many pbcoreDescriptionDocuments in a collection of assets for easy exchange with other systems. You can now have a PBCore “feed,” and use PBCore in RESTful web applications.
-    * A new pbcorePart element allows for defining segments, stories, and clips within an asset, and nested relationships between assets and asset parts.
-    * Extensions are now available at the Asset, Instantiation and EssenceTrack level, and can include metadata and markup from other standards.
+* The addition of optional attributes in many elements.
+* The ability to describe “multi-part instantiations,” i.e. a single media production comprised of more than one film, tape, or file.
+* The inclusion of rights information at the Instantiation level, not just the Intellectual Description level.
+* The option to include markup from other existing rights metadata standards, e.g. ODRL or Creative Commons.
+* A simple way to show relationships between Instantiations, for example that an MPEG4 Instantiation was encoded from a QuickTime Instantiation.
+* The ability to specify time-based metadata within an asset, e.g. where exactly in the timeline a particular subject is discussed or a specific person appears.
+* New core elements that resolve thorny issues encountered by PBCore users: pbcoreAssetType allows you to indicate the “broad editorial format” of the asset, e.g. a program, a clip, an episode, or a scene.
+* pbcoreAssetDate provides, for the first time, a way to specify the creation date of the asset, not just its Instantiations.
+* It is now valid to have an asset with no Instantiations, so you can have an Intellectual Description of an asset for which no Instantiations yet exist. And conversely, you can have an Instantiation Only asset with the new root tag pbcoreInstantiationDocument.
+* The addition of a new pbcoreCollection element allows the wrapping of many pbcoreDescriptionDocuments in a collection of assets for easy exchange with other systems. You can now have a PBCore “feed,” and use PBCore in RESTful web applications.
+* A new pbcorePart element allows for defining segments, stories, and clips within an asset, and nested relationships between assets and asset parts.
+* Extensions are now available at the Asset, Instantiation and EssenceTrack level, and can include metadata and markup from other standards.
 
 Toward a more semantic web
 --------------------------
@@ -46,5 +46,5 @@ The PBCore team has decied to open the PBCore 2.0 repostiory in order to better 
 
 If there are changes you would like to recommend for the next version of PBCore, you can submit issues through the issue tracker on GitHub (look for the Issues tab above). And if you want to submit patches to the schema, please fork this repository and push them. We will consider your patches for the next release of PBCore (which has not yet been scheduled). 
 
-As always, you can also comment on PBCore at PBcore.org and at PBCoreResources.org
+As always, you can also comment on PBCore at [PBcore.org](http://pbcore.org) and at [PBCoreResources.org](http://pbcoreresources.org/).
 
